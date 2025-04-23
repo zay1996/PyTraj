@@ -1,0 +1,26 @@
+[project]
+name = "pytraj"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "zay1996",email = "aiiyinzhang@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12,<4"
+dependencies = [
+    "numpy (>=2.2.5,<3.0.0)",
+    "pandas (>=2.2.3,<3.0.0)",
+    "matplotlib (>=3.10.1,<4.0.0)",
+    "rioxarray (>=0.18.2,<0.19.0)",
+    "xarray (>=2025.3.1,<2026.0.0)",
+    "tqdm (>=4.67.1,<5.0.0)",
+    "dask (>=2025.3.0,<2026.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "pytraj", from = "src"}]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
