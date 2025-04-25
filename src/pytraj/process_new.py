@@ -1,6 +1,6 @@
-import functions_dask_new
-import functions
-import get_data
+from pytraj import functions_dask_new
+from pytraj import functions
+from pytraj import get_data
 
 
 

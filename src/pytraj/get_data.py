@@ -37,12 +37,15 @@ def get_data(years,
     if(type_ == 'raster' or type_ == 'smallraster'):
         # if workpath indicates a tif file
         if (os.path.isfile(filepath) and filepath.lower().endswith('.tif')):
-            raster_data = rioxarray.open_rasterio(filepath).chunk({"band": -1, "y": chunk_size, "x": chunk_size})
-    # if workpath indicates a folder 
+            if(nodata_val is not None):
+                raster_data = rioxarray.open_rasterio(filepath).chunk({"band": -1, "y": chunk_size, "x": chunk_size})
+            if(nodata_val is None or nodata_val is np.nan):
+                raster_data = rioxarray.open_rasterio(filepath,masked=True).chunk({"band": -1, "y": chunk_size, "x": chunk_size})
+        # if workpath indicates a folder 
         elif(os.path.isdir(filepath)):
             tif_files = sorted(glob.glob(f"{filepath}/**/*.tif", recursive=True))
             if(len(tif_files) != len(years)):
-               raise ValueError("Number of files does not match number of time points!")  
+                raise ValueError("Number of files does not match number of time points!")  
             datasets = []
             for y,year in enumerate(years):
                 # update filenname if needed 

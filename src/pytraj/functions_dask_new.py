@@ -161,7 +161,10 @@ class TrajectoryAnalysis:
             adjacent_sum = input_[:-1,:,:] + input_[1:,:,:]
             change_ar[adjacent_sum == 2*2] = 2 # stable presence 
             change_ar[adjacent_sum == 1*2] = 0 # stable absence 
-            change_ar[input_[1:] == 0] = -2 # no data 
+            mask = (input_ == 0).any(axis=0)  
+            mask_broadcasted = np.broadcast_to(mask, change_ar.shape)  # shape: (4, H, W)
+
+            change_ar[mask_broadcasted] = -2 # no data 
             return change_ar
 
 
@@ -611,6 +614,8 @@ class TrajectoryAnalysis:
             self.netstatus = 'loss'
             quantity = abs(quantity)
             components[0] = quantity
+        if (quantity==0):
+            self.netstatus = ''
 
         #com_perc =  [(float(x) * 100) / float(sum_region) for x in components]
 
