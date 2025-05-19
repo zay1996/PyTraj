@@ -25,7 +25,9 @@ class TrajectoryAnalysis:
                  annual = True,
                  save_tif = False,
                  write_dir = None,
-                 split_flag = 'auto'
+                 split_flag = 'auto',
+                 tile_row = None,
+                 tile_col = None
                  ):
         
         self.input_ = input_
@@ -134,6 +136,8 @@ class TrajectoryAnalysis:
                                 for automatic splitting, use split_flag = auto")
             else:
                 tiled = True
+                tile_row = self.tile_row
+                tile_col = self.tile_col
                 tile_datasets = self.split_tiles(tile_row,tile_col)
                 return tiled,tile_datasets 
         if (split_flag == 'no'):
