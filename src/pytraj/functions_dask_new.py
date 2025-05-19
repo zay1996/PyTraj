@@ -24,7 +24,8 @@ class TrajectoryAnalysis:
                  weight = False, 
                  annual = True,
                  save_tif = False,
-                 write_dir = None
+                 write_dir = None,
+                 split_flag = 'auto'
                  ):
         
         self.input_ = input_
@@ -36,6 +37,7 @@ class TrajectoryAnalysis:
         self.chunk_size = chunk_size
         self.save_tif = save_tif
         self.write_dir = write_dir
+        self.split_flag = split_flag 
 
         self.pres_val = self.params['pres_val']
         self.nodata_val = self.params['nodata_val']
@@ -334,8 +336,7 @@ class TrajectoryAnalysis:
 
 
     def process_data(self,tile_row = None,tile_col = None):
-
-        tiled,datasets = self.if_split(tile_row = tile_row,tile_col = tile_col)
+        tiled,datasets = self.if_split(split_flag = self.split_flag,tile_row = tile_row,tile_col = tile_col)
         years = self.years
         annual = self.annual
         weight = self.weight
