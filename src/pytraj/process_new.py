@@ -18,7 +18,8 @@ def run_traj(filepath,
             save_tif = False,
             write_dir = None,
             res = None,
-            annual = True):
+            annual = True,
+            split_flag = 'auto'):
 
     traj_results, com_perc = None, None
     if (type_ == 'raster'):
@@ -37,7 +38,8 @@ def run_traj(filepath,
                                             weight = weight, 
                                             annual = annual,
                                             save_tif = save_tif,
-                                            write_dir = write_dir)
+                                            write_dir = write_dir,
+                                            split_flag = split_flag)
         traj,traj_results = traj_init.process_data()
         traj_init.plot_traj_map(traj)
         traj_init.plot_traj_stack(traj_results)
