@@ -40,7 +40,8 @@ class TrajectoryAnalysis:
         self.save_tif = save_tif
         self.write_dir = write_dir
         self.split_flag = split_flag 
-
+        self.tile_row = tile_row
+        self.tile_col = tile_col 
         self.pres_val = self.params['pres_val']
         self.nodata_val = self.params['nodata_val']
         self.years = self.params['years']
@@ -131,13 +132,13 @@ class TrajectoryAnalysis:
             tiled = False
             return tiled,raster_data 
         if (split_flag == 'yes'):
+            tile_row = self.tile_row
+            tile_col = self.tile_col
             if (tile_row is None or tile_col is None):
                 raise ValueError("Must specified args tile_row and tile_col is split_flag is True!\
                                 for automatic splitting, use split_flag = auto")
             else:
                 tiled = True
-                tile_row = self.tile_row
-                tile_col = self.tile_col
                 tile_datasets = self.split_tiles(tile_row,tile_col)
                 return tiled,tile_datasets 
         if (split_flag == 'no'):
