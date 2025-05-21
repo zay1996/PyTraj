@@ -29,7 +29,8 @@ def run_traj(filepath,
                 pres_val, 
                 nodata_val,
                 filepath = filepath,
-                type_ = type_)
+                type_ = type_,
+                chunk_size = chunk_size)
 
         traj_init = functions_dask_new.TrajectoryAnalysis(
                                             raster_data, 

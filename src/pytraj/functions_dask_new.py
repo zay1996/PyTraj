@@ -465,7 +465,7 @@ class TrajectoryAnalysis:
                     'Stable Presence',
                     'Stable Absence']
 
-        colorlist = ['white','#BF2024','#0F71B8','#EE1D23','#29ACE2','#C5C62E','#F1EB1A','Grey','Silver']
+        colorlist = ['white',"#A81A1F",'#0F71B8','#EE1D23','#29ACE2','#C5C62E','#F1EB1A','Grey','Silver']
 
         cmap = colors.ListedColormap(colorlist)
         boundaries = np.arange(-0.5,9.5,1)
