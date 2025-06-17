@@ -155,6 +155,13 @@ class TrajectoryAnalysis:
             reclassed = da.where(input_ == nodata_val, 0, reclassed)  # Set 0 where combined_data == 0
         if(nodata_val is None):
             reclassed = da.where(da.isnan(input_), 0, reclassed)
+
+        mask = da.any(reclassed == 0, axis=0)  
+        # Broadcast mask back to original shape
+        mask_broadcasted = da.broadcast_to(mask, reclassed.shape)
+
+        # Use da.where to conditionally set values to 0
+        reclassed = da.where(mask_broadcasted, 0, reclassed)
         return reclassed
 
     @staticmethod
@@ -218,7 +225,7 @@ class TrajectoryAnalysis:
             traj[num_pre == nt-1] = 7
             # traj 8: stable absence (num_abs = nc-1)
             traj[num_abs == nt-1] = 8
-            traj[np.any(change_block == -2, axis=0)] = 0
+            traj[np.any(change_block == -2, axis=0)] = 0 # set any no data in time series as 0 
 
             return traj
     
@@ -261,6 +268,8 @@ class TrajectoryAnalysis:
             drop_axis = 0)
         
         xr_traj.data = traj
+        #reclassed_ = da.where(traj == 0, 0,reclassed_) # reset no data as 0 
+        #ref_change = da.where(traj == 0, 0,ref_change)
 
         # ------------------- Compute components ------------------- # 
         bichange = (reclassed_[-1] - reclassed_[0]).astype("int8")
@@ -272,7 +281,9 @@ class TrajectoryAnalysis:
         totalgain = (ref_change == 1).sum()
         totalloss = (ref_change == -1).sum()
         totalchange = (totalgain + totalloss).compute()
-        alternation = totalchange - quantity-exchange 
+        alternation = totalchange - abs(quantity)-exchange 
+
+        #print(f"quantity: {quantity}, exchange:{exchange},totalchange:{totalchange}")
         
 
         traj_loss_ = pd.DataFrame(index=years[:-1], columns=traj_list)
