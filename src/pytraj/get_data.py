@@ -66,7 +66,11 @@ def get_data(years,
         nr = raster_data.sizes['y']
         nc = raster_data.sizes['x']
         time_dim = raster_data.dims[0]
-        res = raster_data.rio.resolution()
+        if(res is None):
+            print("for some reason res is None")
+            res = raster_data.rio.resolution()[0]
+
+        print("res is ",res)
         params = {
             'pres_val':pres_val,
             'nodata_val':nodata_val,

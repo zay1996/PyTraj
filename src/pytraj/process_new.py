@@ -15,6 +15,7 @@ def run_traj(filepath,
             run_map = True,
             run_stacked = True,
             run_comp = True,
+            run_pizza = True,
             save_tif = False,
             write_dir = None,
             res = None,
@@ -25,12 +26,14 @@ def run_traj(filepath,
 
     traj_results, com_perc = None, None
     if (type_ == 'raster'):
+        print("res in here is ",res)
         raster_data,params = get_data.get_data(years, 
                 pres_val, 
                 nodata_val,
                 filepath = filepath,
                 type_ = type_,
-                chunk_size = chunk_size)
+                chunk_size = chunk_size,
+                res = res)
 
         traj_init = functions_dask_new.TrajectoryAnalysis(
                                             raster_data, 
@@ -48,6 +51,7 @@ def run_traj(filepath,
         traj,traj_results = traj_init.process_data()
         traj_init.plot_traj_map(traj)
         traj_init.plot_traj_stack(traj_results)
+        traj_init.plot_pizza(traj)
         com_perc = traj_init.get_components(traj_results,areaunit)
         traj_init.plot_comp(com_perc)
 

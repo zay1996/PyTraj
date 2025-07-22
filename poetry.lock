@@ -521,6 +521,21 @@ python-dateutil = ">=2.7"
 dev = ["meson-python (>=0.13.1,<0.17.0)", "pybind11 (>=2.13.2,!=2.13.3)", "setuptools (>=64)", "setuptools_scm (>=7)"]
 
 [[package]]
+name = "matplotlib-scalebar"
+version = "0.9.0"
+description = "Artist for matplotlib to display a scale bar"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "matplotlib_scalebar-0.9.0-py3-none-any.whl", hash = "sha256:5140525cd4e0c60bcade541b86571dabaf446fa69192530bd82d60b54601aa79"},
+    {file = "matplotlib_scalebar-0.9.0.tar.gz", hash = "sha256:f91adc5e4e67ac920a8fa98a55f904d56e5c2da4d56286748c31ec62146362be"},
+]
+
+[package.dependencies]
+matplotlib = "*"
+
+[[package]]
 name = "numpy"
 version = "2.2.5"
 description = "Fundamental package for array computing in Python"
@@ -1109,4 +1124,4 @@ viz = ["cartopy", "matplotlib", "nc-time-axis", "seaborn"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<4"
-content-hash = "080c368f27e3cdf3f760b94634a96084609486d3812c9e4a4d7befc9d9080b0e"
+content-hash = "6e3f5a1ab18355fe7036d715c49fd17f5fbc1036aac7b29b236618c4b786ba38"

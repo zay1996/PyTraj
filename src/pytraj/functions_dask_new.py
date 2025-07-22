@@ -12,7 +12,10 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from matplotlib import colors
 import dask.array as da 
-
+import pytraj
+from matplotlib_scalebar.scalebar import ScaleBar
+from PIL import Image
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 #%%
 class TrajectoryAnalysis:
     def __init__(self,
@@ -276,7 +279,7 @@ class TrajectoryAnalysis:
         bigain = (bichange == 1).sum().compute()
         biloss = (bichange == -1).sum().compute()
         quantity = bigain - biloss
-        exchange = min(bigain,biloss)
+        exchange = 2*min(bigain,biloss)
 
         totalgain = (ref_change == 1).sum()
         totalloss = (ref_change == -1).sum()
@@ -462,7 +465,7 @@ class TrajectoryAnalysis:
                 return xr_traj,traj_result
 
 
-    def plot_traj_map(self,traj):
+    def plot_traj_map(self,traj,north_arrow = True):
 
         f, axarr = plt.subplots(1,1,figsize=(10,10))
 
@@ -486,6 +489,22 @@ class TrajectoryAnalysis:
         axarr.imshow(traj,cmap=cmap,norm=norm,interpolation='nearest')
         axarr.axis('off')
         plt.subplots_adjust(wspace=0.05, hspace=0.2)
+        res = self.res
+        if res is not None:
+            print("res map = ",res)
+            font_prop = {'size':20}
+            scalebar = ScaleBar(res, location='lower right',font_properties=font_prop)  # 1 pixel = 2 meter
+            axarr.add_artist(scalebar)
+
+        # Add north arrow SVG
+        if north_arrow is True:
+            if res is not None and res != 0:
+                package_dir = os.path.dirname(os.path.abspath(pytraj.__file__)) # find directory of the package    
+                north_arrow = package_dir+'/data/northarrow2.png'  # Update with the path to your SVG file
+                img = Image.open(north_arrow)
+                imagebox = OffsetImage(img, zoom=0.3)  # Adjust zoom as needed
+                ab = AnnotationBbox(imagebox, (1.10, 0.1), frameon=False, xycoords='axes fraction', boxcoords="axes fraction", pad=0.0)
+                axarr.add_artist(ab)
 
         patches = [mpatches.Patch(color=colorlist[i], label=traj_list_map[i]) for i in np.arange(len(traj_list_map))]
         # put those patched as legend-handles into the legend
