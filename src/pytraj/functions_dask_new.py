@@ -342,8 +342,12 @@ class TrajectoryAnalysis:
             elif(areaunit == 'km2'):
                 #traj_loss_km = traj_loss_.copy()
                 #traj_gain_km = traj_gain_.copy()
-                traj_loss.iloc[:,i] = (traj_loss_.iloc[:,i]*(abs(res[0])*abs(res[1])))/(1000**2)
-                traj_gain.iloc[:,i] = (traj_gain_.iloc[:,i]*(abs(res[0])*abs(res[1])))/(1000**2)
+                if(type(res) == int):
+                    traj_loss.iloc[:,i] = (traj_loss_.iloc[:,i]*(abs(res)*abs(res)))/(1000**2)
+                    traj_gain.iloc[:,i] = (traj_gain_.iloc[:,i]*(abs(res)*abs(res)))/(1000**2)
+                else:
+                    traj_loss.iloc[:,i] = (traj_loss_.iloc[:,i]*(abs(res[0])*abs(res[1])))/(1000**2)
+                    traj_gain.iloc[:,i] = (traj_gain_.iloc[:,i]*(abs(res[0])*abs(res[1])))/(1000**2)                    
                 #traj_loss = traj_loss_km
                 #traj_gain = traj_gain_km
             elif(areaunit == 'pixels'):
@@ -663,8 +667,10 @@ class TrajectoryAnalysis:
             sum_extent = sum_region 
             com_perc =  [(float(x) * 100) / float(sum_extent) for x in components]
         elif(comp_unit == 'km2'):
-            com_perc = [(float(x) * abs(res[0])*abs(res[1])) /(1000**2) for x in components] 
-        
+            if(type(res) == int):
+                com_perc = [(float(x) * abs(res)*abs(res)) /(1000**2) for x in components] 
+            else: 
+                com_perc = [(float(x) * abs(res[0])*abs(res[1])) /(1000**2) for x in components] 
         com_perc = [x/np.sum(diff_years) for x in com_perc]
 
         return com_perc
