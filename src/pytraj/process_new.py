@@ -26,7 +26,7 @@ def run_traj(filepath,
 
     traj_results, com_perc = None, None
     if (type_ == 'raster'):
-        print("res in here is ",res)
+        #print("res in here is ",res)
         raster_data,params = get_data.get_data(years, 
                 pres_val, 
                 nodata_val,

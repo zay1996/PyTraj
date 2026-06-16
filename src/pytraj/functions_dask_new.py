@@ -318,7 +318,7 @@ class TrajectoryAnalysis:
                 traj_gain_.iloc[:,i] = np.sum((change_i == 1).astype(int) * weight_i,axis = 1)
                 
             elif(weight == False):
-                print("processing traj",t)
+                print("processing trajectory",t)
                 traj_loss_.iloc[:,i] = -1* np.sum(change_i == -1, axis = (1,2)).compute()
                 traj_gain_.iloc[:,i] = np.sum(change_i == 1, axis = (1,2)).compute()
             
@@ -495,7 +495,7 @@ class TrajectoryAnalysis:
         plt.subplots_adjust(wspace=0.05, hspace=0.2)
         res = self.res
         if res is not None:
-            print("res map = ",res)
+            #print("res map = ",res)
             font_prop = {'size':20}
             scalebar = ScaleBar(res, location='lower right',font_properties=font_prop)  # 1 pixel = 2 meter
             axarr.add_artist(scalebar)
