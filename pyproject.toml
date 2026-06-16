@@ -6,16 +6,16 @@ authors = [
     {name = "zay1996",email = "aiiyinzhang@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.10,<4"
+requires-python = ">=3.10,<3.13"
 dependencies = [
-    "numpy (>=1.26,<3.0.0)",
-    "pandas (>=2.2.3,<3.0.0)",
-    "matplotlib (>=3.10.1,<4.0.0)",
-    "rioxarray (>=0.18.2,<0.19.0)",
-    "xarray (>=2025.3.1,<2026.0.0)",
-    "tqdm (>=4.67.1,<5.0.0)",
-    "dask (>=2025.3.0,<2026.0.0)",
-    "matplotlib-scalebar (>=0.9.0,<0.10.0)"
+    "numpy>=1.26,<2.0",
+    "pandas>=2.2.3,<3.0",
+    "matplotlib>=3.9.2,<4.0",
+    "rioxarray>=0.19,<0.20",
+    "xarray>=2025.4,<2026",
+    "tqdm>=4.67,<5.0",
+    "dask>=2025.4.1,<2026",
+    "matplotlib-scalebar>=0.9,<0.10"
 ]
 
 [tool.poetry]
