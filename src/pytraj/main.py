@@ -53,7 +53,16 @@ def run_traj(filepath,
         com_perc = traj_init.get_components(traj_results,areaunit)
         traj_init.plot_comp(com_perc)
 
-        return traj_init,traj_results,com_perc
+        traj_loss, traj_gain, gain_line,loss_line,stats = traj_results 
+        outputs = {
+        "traj": traj,
+        "traj_loss": traj_loss,
+        "traj_gain": traj_gain,
+        "gainloss_line":[gain_line,loss_line],
+        "components": com_perc
+        }
+
+        return outputs
         
     if(data_type == 'table' or data_type == 'smallraster'):
         input_,params = get_data.get_data(years,

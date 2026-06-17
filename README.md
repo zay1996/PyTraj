@@ -60,7 +60,9 @@ run_stacked : bool, default=True
 run_comp : bool, default=True
     Whether to generate change component summary graphics.
 
-export_map : str or None, default=None Output path prefix for exporting trajectory maps. The path should include the directory and output file name, but not the ".tif" extension. If None, maps are not exported. Example: export_map = r"D:\analysis\traj_map"
+export_map : str or None, default=None Output path prefix for exporting trajectory maps. 
+The path should include the directory and output file name, but not the ".tif" extension. 
+If None, maps are not exported. Example: export_map = r"D:\analysis\traj_map"
 
 res : int or float, optional
     Spatial resolution of the input maps in meters. If not specified, the
