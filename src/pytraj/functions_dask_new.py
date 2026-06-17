@@ -365,7 +365,7 @@ class TrajectoryAnalysis:
         export_map = self.export_map
         areaunit = self.areaunit
         traj_list = self.traj_list_all[1:-2]
-        write_dir = self.write_dir
+        #write_dir = self.write_dir
         diff_years = np.diff(np.array(years).astype("int"))
 
         if (tiled is True):

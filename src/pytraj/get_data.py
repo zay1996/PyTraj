@@ -32,9 +32,9 @@ def get_data(years,
              areaunit = 'pixel',
              weight = False,
              chunk_size = 5000,
-             type_ = 'raster',
+             data_type = 'raster',
              res = None):
-    if(type_ == 'raster' or type_ == 'smallraster'):
+    if(data_type== 'raster' or data_type == 'smallraster'):
         # if workpath indicates a tif file
         if (os.path.isfile(filepath) and filepath.lower().endswith('.tif')):
             if(nodata_val is not None):
@@ -80,11 +80,12 @@ def get_data(years,
             'nc':nc,
             'time_dim':time_dim,
             'res':res,
+            'weight':weight,
             'areaunit':areaunit
         }
 
         return raster_data,params
-    if(type_ == 'table'):
+    if(data_type== 'table'):
         input_ = pd.read_csv(filepath)
         input_ar = input_.iloc[:,1:-1].to_numpy().T
         ns = np.shape(input_)[0]
@@ -92,6 +93,9 @@ def get_data(years,
 
         if(weight is True):
             weight = input_.iloc[:,-1].to_numpy()
+
+        elif(weight is not True):
+            weight = None
         
         params = {
             'pres_val':pres_val,

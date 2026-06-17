@@ -19,7 +19,7 @@ traj_list_all = ['No Data',
 
 
 
-def unwrap_params(input_,params,type = 'raster'):
+def unwrap_params(input_,params,type = 'smallraster'):
     global pres_val, nodata_val, years  # Declare variables as global
     global weight, areaunit, res
     pres_val = params['pres_val']
@@ -29,7 +29,7 @@ def unwrap_params(input_,params,type = 'raster'):
     res = params['res']
 
 
-    if (type == 'raster'):
+    if (type == 'raster' or type == 'smallraster'):
         global nr,nc
         nr = np.shape(input_)[1]
         nc = np.shape(input_)[2]
@@ -64,7 +64,7 @@ def get_traj(input_,type = 'raster'):
         traj = np.zeros((np.shape(input_)[-1]),dtype = int)
 
 
-    elif (type == 'raster'):
+    elif (type == 'raster' or type == 'smallraster'):
         ref_change = np.diff(input_ar,axis = 0)
         #adjacent_sum = ref_ar[:,:-1] + ref_ar[:,1:]
         adjacent_sum = input_ar[:-1,:,:] + input_ar[1:,:,:]
