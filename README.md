@@ -112,6 +112,21 @@ components = outputs["components"]
 
 Trajectory map generated from the input map time series. Each pixel value represents the temporal trajectory of the presence category across all input dates.
 
+The values in the trajectory map are coded as follows:
+
+| Value | Trajectory class                 |
+| ----: | -------------------------------- |
+|     0 | NoData                           |
+|     1 | Loss without alternation         |
+|     2 | Gain without alternation         |
+|     3 | Loss with alternation            |
+|     4 | Gain with alternation            |
+|     5 | All alternation loss first |
+|     6 | All alternation gain first |
+|     7 | Stable presence                  |
+|     8 | Stable absence                   |
+
+
 ### `traj_loss`
 
 A pandas DataFrame summarizing interval-based loss by trajectory type. 
