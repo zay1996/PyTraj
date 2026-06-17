@@ -21,13 +21,12 @@ class TrajectoryAnalysis:
     def __init__(self,
                  input_, 
                  params,
-                 type_ = 'raster',
+                 data_type = 'raster',
                  chunk_size = 1000,
                  areaunit = 'pixels', 
                  weight = False, 
                  annual = True,
-                 save_tif = False,
-                 write_dir = None,
+                 export_map = None, 
                  split_flag = 'auto',
                  tile_row = None,
                  tile_col = None
@@ -35,13 +34,12 @@ class TrajectoryAnalysis:
         
         self.input_ = input_
         self.params = params
-        self.type_ = type_
+        self.data_type = data_type
         self.areaunit = areaunit
         self.weight = weight
         self.annual = annual 
         self.chunk_size = chunk_size
-        self.save_tif = save_tif
-        self.write_dir = write_dir
+        self.export_map = export_map
         self.split_flag = split_flag 
         self.tile_row = tile_row
         self.tile_col = tile_col 
@@ -364,7 +362,7 @@ class TrajectoryAnalysis:
         annual = self.annual
         weight = self.weight
         chunk_size = self.chunk_size
-        save_tif = self.save_tif
+        export_map = self.export_map
         areaunit = self.areaunit
         traj_list = self.traj_list_all[1:-2]
         write_dir = self.write_dir
@@ -421,12 +419,12 @@ class TrajectoryAnalysis:
 
             merged_traj = xr.combine_by_coords(traj_all).astype('int8')
             #merged_traj.chunk({"y": 10000, "x": 10000})
-            if(save_tif is True):
-                merged_traj.rio.to_raster(write_dir + 'traj_1.tif',
+            if(export_map is not None):
+                merged_traj.rio.to_raster(export_map + '.tif',
                                         tile = True,
                                         windowed = True,
-                                        blockxsize=10000,  # Set block size to match chunk size
-                                        blockysize=10000)
+                                        blockxsize=chunk_size,  # Set block size to match chunk size
+                                        blockysize=chunk_size)
                 
             if(annual is True):
                 traj_loss_a = traj_loss_all_.div(diff_years, axis=0)  # Row-wise division
@@ -453,8 +451,8 @@ class TrajectoryAnalysis:
             gain_line = np.sum(np.sum(traj_gain))/np.sum(diff_years)
             loss_line = np.sum(np.sum(traj_loss))/np.sum(diff_years)
 
-            if(save_tif is True):
-                xr_traj.rio.to_raster(write_dir + 'traj_result.tif')
+            if(export_map is not None):
+                xr_traj.rio.to_raster(export_map + '.tif')
             print("Finished computing stats")
             end_time = time.time()  # End timing
             print(f"Data processed in {end_time - start_time:.2f} seconds.\n")

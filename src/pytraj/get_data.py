@@ -70,7 +70,7 @@ def get_data(years,
             print("for some reason res is None")
             res = raster_data.rio.resolution()[0]
 
-        print("res is ",res)
+        #print("res is ",res)
         params = {
             'pres_val':pres_val,
             'nodata_val':nodata_val,
