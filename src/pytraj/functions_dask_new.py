@@ -467,7 +467,7 @@ class TrajectoryAnalysis:
                 return xr_traj,traj_result
 
 
-    def plot_traj_map(self,traj,north_arrow = True):
+    def plot_traj_map(self,traj,north_arrow = True, export_fig = False):
 
         f, axarr = plt.subplots(1,1,figsize=(10,10))
 
@@ -514,6 +514,10 @@ class TrajectoryAnalysis:
         
         f.tight_layout()
 
+        if(export_fig is not False):
+            f.savefig(export_fig + "traj_map.png",dpi = 300, bbox_inches = "tight")
+
+
     def plot_pizza(self,traj):
         import matplotlib
         traj_inds,traj_counts = da.unique(traj.data,return_counts = True)
@@ -556,7 +560,7 @@ class TrajectoryAnalysis:
         plt.title('PIE Trajectories Distribution', fontsize=20, pad=20)
         plt.show()
     #%% plot trajectories stacked bar
-    def plot_traj_stack(self,traj_result,rotation = 90, ylim = None):
+    def plot_traj_stack(self,traj_result,rotation = 90, ylim = None,export_fig = False):
         
         nt = self.nt
         years = self.years
@@ -634,6 +638,9 @@ class TrajectoryAnalysis:
         
         plt.show()
         fig.tight_layout()
+
+        if(export_fig is not False):
+            fig.savefig(export_fig + "traj_stack.png",dpi = 300, bbox_inches = "tight")
         
 
     #%% compute three components 
@@ -658,6 +665,8 @@ class TrajectoryAnalysis:
         #com_perc =  [(float(x) * 100) / float(sum_region) for x in components]
 
         comp_unit = self.areaunit
+        if (comp_unit == 'pixels'):
+            com_perc = components
         if (comp_unit == 'perc_region'):
             sum_rregion = sum_region
             com_perc =  [(float(x) * 100) / float(sum_rregion) for x in components]
@@ -674,7 +683,7 @@ class TrajectoryAnalysis:
         return com_perc
 
     #%% plot components
-    def plot_comp(self,com_perc,ylim = None):
+    def plot_comp(self,com_perc,ylim = None,export_fig = False):
         fig, ax = plt.subplots(figsize=(10,10))
         areaunit = self.areaunit
         #colorlist = ['brown','teal','coral','aquamarine','pink','purple']
@@ -713,4 +722,6 @@ class TrajectoryAnalysis:
         plt.show()
         fig.tight_layout()
 
+        if(export_fig is not False):
+            fig.savefig(export_fig + "traj_comp.png",dpi = 300, bbox_inches = "tight")        
 

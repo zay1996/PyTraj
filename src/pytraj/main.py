@@ -21,7 +21,8 @@ def run_traj(filepath,
             annual = True,
             split_flag = 'auto',
             tile_row = None,
-            tile_col = None):
+            tile_col = None,
+            export_fig = False):
 
     traj_results, com_perc = None, None
     if (data_type== 'raster'):
@@ -47,11 +48,11 @@ def run_traj(filepath,
                                             tile_row = tile_row,
                                             tile_col = tile_col)
         traj,traj_results = traj_init.process_data()
-        traj_init.plot_traj_map(traj)
-        traj_init.plot_traj_stack(traj_results)
+        traj_init.plot_traj_map(traj,export_fig = export_fig)
+        traj_init.plot_traj_stack(traj_results,export_fig = export_fig)
         traj_init.plot_pizza(traj)
         com_perc = traj_init.get_components(traj_results,areaunit)
-        traj_init.plot_comp(com_perc)
+        traj_init.plot_comp(com_perc,export_fig = export_fig)
 
         traj_loss, traj_gain, gain_line,loss_line,stats = traj_results 
         outputs = {
@@ -77,28 +78,29 @@ def run_traj(filepath,
         ref_change,traj,input_ar = functions.get_traj(input_,type = data_type)
         
         if (data_type== 'smallraster' and run_map is True):
-            functions.plot_traj_map(traj)
+            functions.plot_traj_map(traj,export_fig = export_fig)
 
         if (run_stacked is True):
             traj_results = functions.comp_change(input_ar,
                                                 ref_change, 
                                                 traj,
                                                 weight = params['weight'])
-            functions.plot_traj_stack(traj_results,areaunit)
+            
+            traj_loss, traj_gain, gain_line,loss_line,stats = traj_results 
+        
+            outputs = {
+            "traj": traj,
+            "traj_loss": traj_loss,
+            "traj_gain": traj_gain,
+            "gainloss_line":[gain_line,loss_line],
+            }
+            functions.plot_traj_stack(outputs,areaunit,export_fig = export_fig)
 
 
         if (run_comp is True):
-            com_perc = functions.get_components(traj_results,comp_unit = areaunit, type_ = data_type)
-            functions.plot_comp(com_perc,areaunit)
-
-        traj_loss, traj_gain, gain_line,loss_line,stats = traj_results 
-        outputs = {
-        "traj": traj,
-        "traj_loss": traj_loss,
-        "traj_gain": traj_gain,
-        "gainloss_line":[gain_line,loss_line],
-        "components": com_perc
-        }
+            com_perc = functions.get_components(outputs,comp_unit = areaunit, type_ = data_type)
+            functions.plot_comp(com_perc,areaunit,export_fig = export_fig)
+            outputs['components'] = com_perc
 
         return outputs
 
@@ -106,12 +108,12 @@ def run_traj(filepath,
 def adjust_graphs(results,areaunit,data_type,traj_init = None,stack_kwargs = None, comp_kwargs = None):
     '''
     '''
-    traj_results,com_perc = results
-    if (traj_results is not None and stack_kwargs):
+    com_perc = results['components']
+    if (results is not None and stack_kwargs):
         if(data_type == 'smallraster' or data_type == 'table'):
-            functions.plot_traj_stack(traj_results,areaunit,**stack_kwargs)
+            functions.plot_traj_stack(results,areaunit,**stack_kwargs)
         elif(data_type == 'raster'):
-            traj_init.plot_traj_stack(traj_results,**stack_kwargs)
+            traj_init.plot_traj_stack(results,**stack_kwargs)
     if (com_perc is not None and comp_kwargs):
         if(data_type == 'smallraster' or data_type== 'table'):
             functions.plot_comp(com_perc,areaunit,**comp_kwargs)

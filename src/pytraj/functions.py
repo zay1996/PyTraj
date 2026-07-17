@@ -211,7 +211,7 @@ def comp_change(input_ar,ref_change,traj,annual = True,weight = False):
 
 
 #%% plot trajectories map
-def plot_traj_map(traj):
+def plot_traj_map(traj,export_fig = False):
 
     f, axarr = plt.subplots(1,1,figsize=(10,10))
 
@@ -241,12 +241,18 @@ def plot_traj_map(traj):
     axarr.legend(handles=patches,bbox_to_anchor=(1.01, 1), loc=2, borderaxespad=0. )
     
     f.tight_layout()
+
+    if(export_fig is not False):
+        f.savefig(export_fig + "traj_map.png",dpi = 300, bbox_inches = "tight")
+
 #f.suptitle('Water change based on direct change detection', fontsize=20)
 #%% plot trajectories stacked bar
-def plot_traj_stack(traj_result, areaunit, rotation = 90, ylim = None):
+def plot_traj_stack(traj_result, areaunit, rotation = 90, ylim = None, export_fig = False):
     
     traj_list = traj_list_all[1:-2]
-    traj_loss, traj_gain,gain_line,loss_line,_ = traj_result 
+    traj_loss = traj_result['traj_loss']
+    traj_gain = traj_result['traj_gain']
+    gain_line,loss_line = traj_result['gainloss_line']
     
     # change the sequence to put all alt gain before all alt loss
     new_columns = traj_list[:-2] + traj_list[-1:] + traj_list[-2:-1]
@@ -319,13 +325,18 @@ def plot_traj_stack(traj_result, areaunit, rotation = 90, ylim = None):
     
     plt.show()
     fig.tight_layout()
+
+    if(export_fig is not False):
+        fig.savefig(export_fig + "traj_stack.png",dpi = 300, bbox_inches = "tight")
+
+    return fig
     
 
 
 #%% compute three components 
 def get_components(traj_results,type_ = 'raster',comp_unit = 'perc_region'):
     global netstatus
-    _,_,_,_,components = traj_results
+    components = traj_results['components']
     diff_years = np.diff(np.array(years).astype(int))
     quantity, exchange, alternation,sum_region = components
 
@@ -352,7 +363,7 @@ def get_components(traj_results,type_ = 'raster',comp_unit = 'perc_region'):
 
 
 #%% plot components
-def plot_comp(com_perc,areaunit,ylim = None):
+def plot_comp(com_perc,areaunit,ylim = None,export_fig = False):
     fig, ax = plt.subplots(figsize=(10,10))
 
     #colorlist = ['brown','teal','coral','aquamarine','pink','purple']
@@ -392,6 +403,10 @@ def plot_comp(com_perc,areaunit,ylim = None):
 
     plt.show()
     fig.tight_layout()
+    if(export_fig is not False):
+        fig.savefig(export_fig + "traj_comp.png",dpi = 300, bbox_inches = "tight")
+
+    return fig
 
 
 def run_all(input_,params,areaunit = 'perc_region', type = 'raster',weight = False):
