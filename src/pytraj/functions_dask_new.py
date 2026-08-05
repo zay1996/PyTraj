@@ -655,9 +655,8 @@ class TrajectoryAnalysis:
                 fontsize=15
             )
                 
-        
-        plt.show()
         fig.tight_layout()
+        plt.show()
 
         if(export_fig is not False):
             fig.savefig(export_fig + "traj_stack.png",dpi = 300, bbox_inches = "tight")
