@@ -243,6 +243,7 @@ def plot_traj_map(traj,export_fig = False):
     f.tight_layout()
 
     if(export_fig is not False):
+        print("saving figures")
         f.savefig(export_fig + "traj_map.png",dpi = 300, bbox_inches = "tight")
 
 #f.suptitle('Water change based on direct change detection', fontsize=20)

@@ -560,7 +560,7 @@ class TrajectoryAnalysis:
         plt.title('PIE Trajectories Distribution', fontsize=20, pad=20)
         plt.show()
     #%% plot trajectories stacked bar
-    def plot_traj_stack(self,traj_result,rotation = 90, ylim = None,export_fig = False):
+    def plot_traj_stack(self,traj_result,rotation = 90, ylim = None,export_fig = False,figsize = (12,6),legend = 'bottom'):
         
         nt = self.nt
         years = self.years
@@ -580,7 +580,7 @@ class TrajectoryAnalysis:
         gain_bottom.insert(0,"0",np.zeros(nt-1))
         width=np.diff(np.array(years).astype(int))
         
-        fig, ax = plt.subplots(figsize=(12,6))
+        fig, ax = plt.subplots(figsize=figsize)
         
         #colorlist = ['brown','teal','coral','aquamarine','pink','purple']
         colorlist = ['#BF2024','#0F71B8','#EE1D23','#29ACE2','#F1EB1A','#C5C62E']
@@ -613,9 +613,11 @@ class TrajectoryAnalysis:
         #ax.figure.autofmt_xdate()
         ax.axhline(y=0,color='0',linewidth=0.5)
         # Add gross lines
-        plt.axhline(y=gain_line, color='black', linestyle='--', linewidth=1.5, label='Gain Line')
-        plt.axhline(y=loss_line, color='black', linestyle=':', linewidth=1.5, label='Loss Line')
-
+        #plt.axhline(y=gain_line, color='black', linestyle='--', linewidth=1.5, label='Gain Line')
+        #plt.axhline(y=loss_line, color='black', linestyle=':', linewidth=1.5, label='Loss Line')
+        
+        plt.axhline(y=gain_line, color = 'black', linewidth = 2, label = 'Gain Line', linestyle = 'dashed')
+        plt.axhline(y=loss_line, color = 'black', linewidth = 2, label = 'Loss Line', linestyle = 'dashdot')
         if(ylim is None):
             ax.set_ylim([np.min(np.min(loss_bottom))*1.1,np.max(np.max(gain_bottom))*1.1])
         if(ylim is not None):
@@ -628,13 +630,31 @@ class TrajectoryAnalysis:
         #order = np.arange(len(traj_list)+2)
         order = [0,1,2,3,4,5,7,6]
 
-        ax.legend([handles[i] for i in order], [labels[i] for i in order], 
-                ncol=4, 
-                bbox_to_anchor=(0.5, -0.3), 
-                frameon = False,
-                loc='center', 
-                fontsize = 15)
-        
+        ordered_handles = [handles[i] for i in order]
+        ordered_labels = [labels[i] for i in order]
+
+        if legend == 'bottom':
+            ax.legend(
+                ordered_handles,
+                ordered_labels,
+                ncol=int(np.ceil(len(order) / 2)),  # two rows
+                bbox_to_anchor=(0.5, -0.3),
+                frameon=False,
+                loc='center',
+                fontsize=15
+            )
+
+        elif legend == 'right':
+            ax.legend(
+                ordered_handles,
+                ordered_labels,
+                ncol=1,
+                bbox_to_anchor=(1.02, 0.5),
+                frameon=False,
+                loc='center left',
+                fontsize=15
+            )
+                
         
         plt.show()
         fig.tight_layout()

@@ -22,6 +22,7 @@ def run_traj(filepath,
             split_flag = 'auto',
             tile_row = None,
             tile_col = None,
+            legend = 'bottom',
             export_fig = False):
 
     traj_results, com_perc = None, None
@@ -49,7 +50,7 @@ def run_traj(filepath,
                                             tile_col = tile_col)
         traj,traj_results = traj_init.process_data()
         traj_init.plot_traj_map(traj,export_fig = export_fig)
-        traj_init.plot_traj_stack(traj_results,export_fig = export_fig)
+        traj_init.plot_traj_stack(traj_results,export_fig = export_fig,legend = legend)
         traj_init.plot_pizza(traj)
         com_perc = traj_init.get_components(traj_results,areaunit)
         traj_init.plot_comp(com_perc,export_fig = export_fig)
