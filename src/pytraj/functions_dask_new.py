@@ -600,7 +600,7 @@ class TrajectoryAnalysis:
                 color = colorlist[i], align='edge')
 
         if(areaunit == 'pixels'):
-            ax.set_ylabel('Annual loss and gain (number of pixels)',fontsize=16)
+            ax.set_ylabel('Annual loss and gain \n (number of pixels)',fontsize=16)
         if(areaunit == 'sqm2'):
             ax.set_ylabel('Annual loss and gain (Square Meters)',fontsize = 16)
         if(areaunit == 'km2'):
