@@ -579,6 +579,13 @@ class TrajectoryAnalysis:
         loss_bottom.insert(0, "0", np.zeros(nt-1))
         gain_bottom.insert(0,"0",np.zeros(nt-1))
         width=np.diff(np.array(years).astype(int))
+
+        if self.nt < 30:
+            xlabel_size = 18
+        elif self.nt < 60:
+            xlabel_size = 14
+        else:
+            xlabel_size = 10
         
         fig, ax = plt.subplots(figsize=figsize)
         
@@ -609,7 +616,7 @@ class TrajectoryAnalysis:
         ax.set_xticks(np.array(years).astype(int))  # Set the positions of the ticks
         ax.set_xticklabels(np.array(years).astype('str'),rotation = rotation)         # Set the labels for the ticks
         ax.tick_params(axis='both', which='major', labelsize=16)
-        
+        ax.tick_params(axis='x', labelsize=xlabel_size)
         #ax.figure.autofmt_xdate()
         ax.axhline(y=0,color='0',linewidth=0.5)
         # Add gross lines
