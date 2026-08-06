@@ -600,15 +600,15 @@ class TrajectoryAnalysis:
                 color = colorlist[i], align='edge')
 
         if(areaunit == 'pixels'):
-            ax.set_ylabel('Annual loss and gain \n (number of pixels)',fontsize=16)
+            ax.set_ylabel('Annual loss and gain \n (number of pixels)',fontsize=20)
         if(areaunit == 'sqm2'):
-            ax.set_ylabel('Annual loss and gain (Square Meters)',fontsize = 16)
+            ax.set_ylabel('Annual loss and gain \n (Square Meters)',fontsize = 20)
         if(areaunit == 'km2'):
-            ax.set_ylabel('Annual loss and gain (km²)',fontsize = 16)
+            ax.set_ylabel('Annual loss and gain (km²)',fontsize = 20)
         if(areaunit == 'perc_region'):
-            ax.set_ylabel("Annual loss and gain \n (% out of Union Presence)",fontsize = 16)
+            ax.set_ylabel("Annual loss and gain \n (% out of Union Presence)",fontsize = 20)
         if(areaunit == 'perc_extent'):
-            ax.set_ylabel("Annual loss and gain \n (% out of spatial extent)", fontsize = 16)
+            ax.set_ylabel("Annual loss and gain \n (% out of spatial extent)", fontsize = 20)
                     
                     
         ax.set_xlabel('Time Interval',fontsize=20)
